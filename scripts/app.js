@@ -11,6 +11,10 @@ const page = {                  //Описывает работу Меню
         h1: document.querySelector('.h1'),
         progressPercent: document.querySelector('.progress__percent'),
         progressCoverBar: document.querySelector('.progress__cover-bar')    
+    },
+    content: {
+        daysContainer: document.getElementById('days'), //Обращаемся к диву с днями
+        nextDay: document.querySelector('.habbit__day')  //Обращаемся на прямую ко дню
     }
 }
 
@@ -35,9 +39,6 @@ function saveData() {
 
 //render
 function rerenderMenu(activeHabbit) {
-    if (!activeHabbit){           //Проверка если у нас нет хеббитАйди
-        return;
-    }
     //Если у нас есть значение хеббитАйди, то мы идем по массиву
     for (const habbit of habbits) {
        const existed = document.querySelector(`[menu-habbit-id="${habbit.id}"]`); //Задаём индетифик в хтмл файле и сюда привязываем к квериСелектору
@@ -63,9 +64,6 @@ function rerenderMenu(activeHabbit) {
 }
 //Рендер шапки
 function renderHead(activeHabbit){
-    if (!activeHabbit){           //Проверка если у нас нет хеббитАйди в шапке ничего не выполняем
-        return;
-    }
     page.header.h1.innerText = activeHabbit.name;
     //Пишем тернарный оператор для подсчета прогресс бара
     const progress = activeHabbit.days.length / activeHabbit.target > 1 //Условие
@@ -74,11 +72,34 @@ function renderHead(activeHabbit){
     page.header.progressPercent.innerText = progress.toFixed(0) + ' %';       //toFixed помогает округлять до целого числа, даже дробные
     page.header.progressCoverBar.setAttribute('style', `width: ${progress}%`); //увеличивает полоску прогресс бара
 }
+//По сути каждый раз мы очищаем и для каждого дня мы пересоздаём
+function rerenderContent(activeHabbit) {
+    page.content.daysContainer.innerHTML = '';                               //Нужно обнулить дни
+    for (const index in activeHabbit.days){                                 //Проходимся по дням
+        const element = document.createElement('div');                      //Создаём див с классом habbit
+        element.classList.add('habbit');
+        element.innerHTML = element.innerHTML = `
+        <div class="habbit__day">День ${Number(index) + 1}</div>
+        <div class="habbit__comment">${activeHabbit.days[index].comment}</div>
+        <button class="habbit__delete">
+        <img src="./images/delete.svg" alt="Удалить день ${Number(index) + 1}" />
+        </button>
+        `;
+
+        page.content.daysContainer.appendChild(element);                    //Добавляем в качестве child элемента 
+    }
+    page.content.nextDay.innerHTML = `День ${activeHabbit.days.length + 1}`;
+}
+
 
 function rerender(activeHabbitId) {
-    const activeHabbit = habbits.find(habbit => habbit.id === activeHabbitId);  //
+    const activeHabbit = habbits.find(habbit => habbit.id === activeHabbitId);
+    if (!activeHabbit){           //Проверка если у нас нет хеббитАйди в шапке ничего не выполняем
+        return;
+    }
     rerenderMenu(activeHabbit);
     renderHead(activeHabbit);
+    rerenderContent(activeHabbit);
 }
 
 
