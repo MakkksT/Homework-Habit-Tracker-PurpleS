@@ -102,6 +102,12 @@ function rerender(activeHabbitId) {
     rerenderContent(activeHabbit);
 }
 
+//work with days
+function addDays(event) {
+    event.preventDefault();         //Отменяет действие браузера по умолчанию для конкретного события.
+    const data = new FormData(event.target);    //Фактически мы получаем новый объект, который является форм датой
+}
+
 
 //init
 //Для того чтобы инициализация была один раз будем использовать Intermediate local function в виде стрелоч. функции
