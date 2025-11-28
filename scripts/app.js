@@ -16,6 +16,9 @@ const page = {                  //Описывает работу Меню
     content: {
         daysContainer: document.getElementById('days'), //Обращаемся к диву с днями
         nextDay: document.querySelector('.habbit__day')  //Обращаемся на прямую ко дню
+    },
+    popup: {
+        index: document.getElementById('add-habbit-popup')
     }
 }
 
@@ -36,6 +39,18 @@ function loadData() {                   //localStorage.getItem() — это ме
 function saveData() {
     localStorage.setItem(HABBIT_KEY, JSON.stringify(habbits)); //localStorage.setItem() — это метод в JavaScript, который используется для сохранения данных в локальном хранилище браузера.
 }
+
+//popup
+function togglePopup() {
+    if (page.popup.index.classList.contains('cover_hidden')){
+        page.popup.index.classList.remove('cover_hidden');
+    } else {
+        page.popup.index.classList.add('cover_hidden');
+    }
+
+}
+
+
 
 //render
 function rerenderMenu(activeHabbit) {
