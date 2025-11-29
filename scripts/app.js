@@ -121,11 +121,11 @@ function rerenderContent(activeHabbit) {
     for (const index in activeHabbit.days){                                 //Проходимся по дням
         const element = document.createElement('div');                      //Создаём див с классом habbit
         element.classList.add('habbit');
-        element.innerHTML = element.innerHTML = `
+        element.innerHTML = `
         <div class="habbit__day">День ${Number(index) + 1}</div>
         <div class="habbit__comment">${activeHabbit.days[index].comment}</div>
         <button class="habbit__delete" onclick="deleteDay(${index})">
-        <img src="./images/delete.svg" alt="Удалить день ${Number(index) + 1}" />
+        <img src="./images/delete.svg" alt="Удалить день ${(index) + 1}" />
         </button>
         `;
 
@@ -141,6 +141,7 @@ function rerender(activeHabbitId) {
     if (!activeHabbit){           //Проверка если у нас нет хеббитАйди в шапке ничего не выполняем
         return;
     }
+    document.location.hash = activeHabbitId;
     document.location.replace(document.location.pathname + '#' + activeHabbitId);
     rerenderMenu(activeHabbit);
     renderHead(activeHabbit);
@@ -166,6 +167,7 @@ function addDays(event) {
     resetForm (event.target, ['comment']);
     rerender(globalActiveHabbitId);
     saveData();
+
 }
 
 // delete day
@@ -210,6 +212,7 @@ function addHabbit(event) {
     });
     resetForm(event.target, ['name','target'])
     togglePopup();
+    saveData();
     rerender(maxId + 1);
 }
 

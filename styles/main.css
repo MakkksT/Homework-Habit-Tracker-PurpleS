@@ -53,10 +53,10 @@ body {
   filter: brightness(0) invert(1);
 }
 
-.menu__item_active:hover {
+.menu__item_active {
   background: #5051f9;
 }
-.menu__item_active: img {
+.menu__item_active img {
   filter: brightness(0) invert(1);
 }
 
@@ -181,7 +181,7 @@ input {
   font-size: 14px;
 }
 
-input:placeholder {
+input::placeholder {
   color: #8899a8;
 }
 
@@ -207,7 +207,7 @@ input.error {
   left: 45px;
 }
 
-.button__ready {
+.button {
   border-radius: 9px;
   background: #edecfe;
   border: none;
@@ -218,7 +218,7 @@ input.error {
   cursor: pointer;
 }
 
-.button__ready:hover {
+.button:hover {
   background: #dcdaffff;
 }
 
