@@ -141,6 +141,7 @@ function rerender(activeHabbitId) {
     if (!activeHabbit){           //Проверка если у нас нет хеббитАйди в шапке ничего не выполняем
         return;
     }
+    document.location.replace(document.location.pathname + '#' + activeHabbitId);
     rerenderMenu(activeHabbit);
     renderHead(activeHabbit);
     rerenderContent(activeHabbit);
@@ -217,7 +218,15 @@ function addHabbit(event) {
 // и в рамках этой функции будем исполнять loadData()
 (() => {
     loadData();
-    rerenderMenu(habbits[0].id);
+    const hashId = Number(document.location.hash.replace('#', ''));
+    const urlHabbit = habbits.find(habbit => habbit.id == hashId);
+    if (urlHabbit) {
+        rerender(urlHabbit.id);
+    } else {
+        rerender(habbits[0].id);
+    }
+      
+    // rerenderMenu(habbits[0].id);
 })();
 
 //Добавили минимально данных для динам. проверки, потому что без данных это будет трудно сделать
